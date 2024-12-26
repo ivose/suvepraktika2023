@@ -1,0 +1,71 @@
+<!-- src/app/app.component.html -->
+<mat-toolbar>
+  <div class="navbar-container">
+    <!-- Left side -->
+    <div class="nav-left">
+      <a mat-button routerLink="/">
+        <mat-icon>library_books</mat-icon>
+        Library
+      </a>
+
+      <!-- Navigation links based on user role -->
+      <ng-container *ngIf="currentUser$ | async as user">
+        <ng-container *ngIf="user.role === 'ADMIN' || user.role === 'LIBRARIAN'">
+          <a mat-button routerLink="/books">
+            <mat-icon>book</mat-icon>
+            Books
+          </a>
+          <a mat-button routerLink="/checkouts">
+            <mat-icon>assignment_returned</mat-icon>
+            Checkouts
+          </a>
+        </ng-container>
+
+        <ng-container *ngIf="user.role === 'ADMIN'">
+          <a mat-button routerLink="/users">
+            <mat-icon>people</mat-icon>
+            Users
+          </a>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <!-- Right side -->
+    <div class="nav-right">
+      <ng-container *ngIf="!(currentUser$ | async)">
+        <a mat-button routerLink="/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a mat-button routerLink="/signup">
+          <mat-icon>person_add</mat-icon>
+          Sign Up
+        </a>
+      </ng-container>
+
+      <ng-container *ngIf="currentUser$ | async as user">
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>account_circle</mat-icon>
+          {{ user.firstName }} {{ user.lastName }}
+        </button>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            Profile
+          </a>
+          <a mat-menu-item routerLink="/password">
+            <mat-icon>lock</mat-icon>
+            Change Password
+          </a>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </mat-menu>
+      </ng-container>
+    </div>
+  </div>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

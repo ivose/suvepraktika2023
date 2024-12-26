@@ -1,0 +1,17 @@
+/* book-dialog.component.css */
+mat-form-field {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+mat-dialog-content {
+  min-width: 400px;
+}
+
+mat-dialog-actions {
+  padding: 16px 0;
+}
+
+textarea {
+  min-height: 80px;
+}

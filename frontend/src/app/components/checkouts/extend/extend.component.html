@@ -1,0 +1,35 @@
+<div mat-dialog-content cdkTrapFocus>
+  <h2 mat-dialog-title>Extend Due Date</h2>
+  <form [formGroup]="extendForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Number of Days</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="days"
+          required
+          min="1"
+          cdkFocusInitial
+        />
+        <mat-error *ngIf="extendForm.get('days')?.hasError('required')">
+          Number of days is required
+        </mat-error>
+        <mat-error *ngIf="extendForm.get('days')?.hasError('min')">
+          Must be at least 1 day
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button type="button" mat-button mat-dialog-close>Cancel</button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!extendForm.valid"
+      >
+        Extend
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

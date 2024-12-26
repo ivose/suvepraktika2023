@@ -1,0 +1,60 @@
+<div class="container" *ngIf="checkout$ | async as checkout">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Checkout Details</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="detail-grid">
+          <div class="detail-row">
+            <span class="label">Borrower:</span>
+            <span>{{checkout.borrowerFirstName}} {{checkout.borrowerLastName}}</span>
+          </div>
+  
+          <div class="detail-row">
+            <span class="label">Book:</span>
+            <span>{{checkout.borrowedBook.title}} by {{checkout.borrowedBook.author}}</span>
+          </div>
+  
+          <div class="detail-row">
+            <span class="label">Checkout Date:</span>
+            <span>{{checkout.checkedOutDate | date}}</span>
+          </div>
+  
+          <div class="detail-row">
+            <span class="label">Due Date:</span>
+            <span>{{checkout.dueDate | date}}</span>
+          </div>
+  
+          <div class="detail-row" *ngIf="checkout.returnedDate">
+            <span class="label">Returned Date:</span>
+            <span>{{checkout.returnedDate | date}}</span>
+          </div>
+  
+          <div class="detail-row">
+            <span class="label">Status:</span>
+            <mat-chip-listbox>
+              <mat-chip [color]="checkout.returnedDate ? 'accent' : 'warn'" selected>
+                {{checkout.returnedDate ? 'Returned' : 'Checked Out'}}
+              </mat-chip>
+            </mat-chip-listbox>
+          </div>
+        </div>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button mat-button (click)="returnBook(checkout)" *ngIf="!checkout.returnedDate">
+          <mat-icon>assignment_return</mat-icon>
+          Return Book
+        </button>
+        <button mat-button (click)="extendDueDate(checkout)" *ngIf="!checkout.returnedDate">
+          <mat-icon>update</mat-icon>
+          Extend Due Date
+        </button>
+        <button mat-button routerLink="/checkouts">
+          <mat-icon>arrow_back</mat-icon>
+          Back to List
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

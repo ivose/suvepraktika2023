@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>{{data ? 'Edit' : 'Add'}} Checkout</h2>
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Borrower First Name</mat-label>
+      <input matInput formControlName="borrowerFirstName" required>
+      <mat-error *ngIf="checkoutForm.get('borrowerFirstName')?.hasError('required')">
+        First name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Borrower Last Name</mat-label>
+      <input matInput formControlName="borrowerLastName" required>
+      <mat-error *ngIf="checkoutForm.get('borrowerLastName')?.hasError('required')">
+        Last name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Book</mat-label>
+      <mat-select formControlName="borrowedBook" required>
+        <mat-option *ngFor="let book of books$ | async" [value]="book">
+          {{book.title}} by {{book.author}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="checkoutForm.get('borrowedBook')?.hasError('required')">
+        Book is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Checkout Date</mat-label>
+      <input matInput [matDatepicker]="checkedOutPicker" formControlName="checkedOutDate" required>
+      <mat-datepicker-toggle matSuffix [for]="checkedOutPicker"></mat-datepicker-toggle>
+      <mat-datepicker #checkedOutPicker></mat-datepicker>
+      <mat-error *ngIf="checkoutForm.get('checkedOutDate')?.hasError('required')">
+        Checkout date is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="duePicker" formControlName="dueDate" required>
+      <mat-datepicker-toggle matSuffix [for]="duePicker"></mat-datepicker-toggle>
+      <mat-datepicker #duePicker></mat-datepicker>
+      <mat-error *ngIf="checkoutForm.get('dueDate')?.hasError('required')">
+        Due date is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Return Date</mat-label>
+      <input matInput [matDatepicker]="returnPicker" formControlName="returnedDate">
+      <mat-datepicker-toggle matSuffix [for]="returnPicker"></mat-datepicker-toggle>
+      <mat-datepicker #returnPicker></mat-datepicker>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!checkoutForm.valid">
+      {{data ? 'Update' : 'Create'}}
+    </button>
+  </mat-dialog-actions>
+</form>

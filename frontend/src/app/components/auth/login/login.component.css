@@ -1,0 +1,30 @@
+/* src/app/components/auth/login/login.component.css */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 64px);
+    padding: 20px;
+  }
+  
+  mat-card {
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+  }
+  
+  .links-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
